@@ -1,0 +1,38 @@
+<div class="row align-items-md-stretch">
+  <div class="h-100 p-2">
+    <h2>Pour acheter un forfait, merci de choisir une ligne de la liste</h2>
+    <form [formGroup]="contactForm">
+      <select class="form-select" (ngModelChange)="submit()" formControlName="phone" *ngIf="phones$ | async as phones">
+        <option [ngValue]="null" disabled>Choisir une ligne</option>
+        <option *ngFor="let phone of phones" [ngValue]="phone">{{phone.name}}</option>
+      </select>
+    </form>
+  </div>
+</div>
+<div class="h-100 p-2  bg-dark rounded-3" *ngIf="sPhone">
+  <div class="row text-white" >
+    <div class="col-md-3">
+      <h4 class="fw-bold m-0">Porteur</h4>
+      {{sPhone.name}}
+    </div>
+    <div class="col-md-3">
+      <h4 class="fw-bold m-0">Numéro</h4>
+      {{sPhone.number}}
+    </div>
+    <div class="col-md-3">
+      <h4 class="fw-bold m-0">Type de ligne</h4>
+      {{getProduct(sPhone.product)}}
+    </div>
+    <div class="col-md-3">
+      <h4 class="fw-bold m-0">Rateplan de la ligne</h4>
+      {{sPhone.ratePlan}}
+    </div>
+  </div>
+
+</div>
+<div class="d-flex justify-content-end pt-2">
+  <button (click)="poursuivre(sPhone)" class="btn btn-primary " [disabled]="!sPhone">Poursuivre </button>
+</div>
+<footer class="pt-3 mt-4 text-muted border-top">
+  © 2021
+</footer>

@@ -1,0 +1,45 @@
+<div class="section_title">
+  <h4 class="p-0 m-0 md-center text-main">Choisissez le mode d'achat qui vous convient:</h4>
+</div>
+<div class="container" *ngIf="sPhoneNumber">
+  <div class="row">
+    <div class="col-md-4">
+      <button type="button" class="btn btn-outline-primary w-100" (click)="changePaymentMethod(0)"
+        [class.active]="pm==0">Banque (Remise 10%)</button>
+    </div>
+    <div class="col-md-4">
+      <button type="button" class="btn btn-outline-primary w-100" (click)="changePaymentMethod(1)"
+        [class.active]="pm==1">Poste (Remise
+        10%)</button>
+    </div>
+    <div class="col-md-4">
+      <button type="button" class="btn btn-outline-primary w-100" (click)="changePaymentMethod(2)"
+        [class.active]="pm==2">Solde (Sans
+        remise)</button>
+    </div>
+  </div>
+  <h4 class="p-0 m-0 md-center text-main">Choisissez votre forfait:</h4>
+  <div class="listoff-tt">
+    <div class="container">
+      <div *ngIf="forfaits$ | async as forfaits" class="row d-flex justify-center f-wrap">
+        <div *ngFor="let ff of forfaits" class="col-md-2 col-sm-6 col-xs-6">
+          <div [ngClass]="checkEligibility(ff.restrictedRatePlans,ff.allowedProductType)">
+            <div class="stat conso2 d-flex flex-col align-center">
+              <div class="expiration d-flex">
+                30 jours
+              </div>
+              <div class="quota">
+                {{ff.size}} {{ff.unit}}
+                <br>
+              </div>
+              <div class="discount">{{ff.basePrice}}</div>
+              <div *ngIf="pm!=2" class="price">{{ff.basePrice * ((1-ff.bankDiscount/100)) |number}} DT</div>
+              <div *ngIf="pm==2" class="price">{{ff.basePrice  |number}} DT</div>
+              <button type="button" class="btn btn-outline-success rounded-5 px-3 py-1">Success</button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
